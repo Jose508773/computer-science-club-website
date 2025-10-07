@@ -15,6 +15,13 @@
     </head>
 
     <body>
+        <!-- Font Size Adjuster -->
+        <div class="font-controls">
+            <button onclick="changeFontSize('small')" title="Small Font">A-</button>
+            <span class="current-size" id="currentSize">Normal</span>
+            <button onclick="changeFontSize('large')" title="Large Font">A+</button>
+        </div>
+
         <header>
             <h1><i class="fas fa-computer"></i> Computer Science Club</h1>
         </header>
@@ -36,5 +43,31 @@
         <footer>
             <p id="foottext">&copy; 2025 Computer Science Club of CSU Stanislaus</p>
         </footer>
+
+        <script>
+            function changeFontSize(size) {
+                const body = document.body;
+                const currentSizeSpan = document.getElementById('currentSize');
+                body.classList.remove('font-small', 'font-normal', 'font-large', 'font-extra-large');
+                switch(size) {
+                    case 'small': body.classList.add('font-small'); currentSizeSpan.textContent = 'Small'; break;
+                    case 'normal': body.classList.add('font-normal'); currentSizeSpan.textContent = 'Normal'; break;
+                    case 'large': body.classList.add('font-large'); currentSizeSpan.textContent = 'Large'; break;
+                    case 'extra-large': body.classList.add('font-extra-large'); currentSizeSpan.textContent = 'XL'; break;
+                }
+                localStorage.setItem('fontSize', size);
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                const savedFontSize = localStorage.getItem('fontSize');
+                if (savedFontSize) changeFontSize(savedFontSize);
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === '-' || e.key === '_') { e.preventDefault(); changeFontSize('small'); }
+                    if (e.key === '=' || e.key === '+') { e.preventDefault(); changeFontSize('large'); }
+                    if (e.key === '0') { e.preventDefault(); changeFontSize('normal'); }
+                }
+            });
+        </script>
     </body>
 </html>

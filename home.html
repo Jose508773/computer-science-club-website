@@ -11,6 +11,13 @@
     </head>
 
     <body>
+        <!-- Font Size Adjuster -->
+        <div class="font-controls">
+            <button onclick="changeFontSize('small')" title="Small Font">A-</button>
+            <span class="current-size" id="currentSize">Normal</span>
+            <button onclick="changeFontSize('large')" title="Large Font">A+</button>
+        </div>
+
         <header>
             <h1><i class="fas fa-computer"></i> Computer Science Club</h1>
         </header>
@@ -46,5 +53,69 @@
         <footer>
             <p id="foottext">&copy; 2025 Computer Science Club of CSU Stanislaus</p>
         </footer>
+
+        <script>
+            // Font size adjuster functionality
+            function changeFontSize(size) {
+                const body = document.body;
+                const currentSizeSpan = document.getElementById('currentSize');
+                
+                // Remove existing font size classes
+                body.classList.remove('font-small', 'font-normal', 'font-large', 'font-extra-large');
+                
+                // Add new font size class and update display
+                switch(size) {
+                    case 'small':
+                        body.classList.add('font-small');
+                        currentSizeSpan.textContent = 'Small';
+                        break;
+                    case 'normal':
+                        body.classList.add('font-normal');
+                        currentSizeSpan.textContent = 'Normal';
+                        break;
+                    case 'large':
+                        body.classList.add('font-large');
+                        currentSizeSpan.textContent = 'Large';
+                        break;
+                    case 'extra-large':
+                        body.classList.add('font-extra-large');
+                        currentSizeSpan.textContent = 'XL';
+                        break;
+                }
+                
+                // Save preference to localStorage
+                localStorage.setItem('fontSize', size);
+            }
+
+            // Load saved font size preference on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                const savedFontSize = localStorage.getItem('fontSize');
+                if (savedFontSize) {
+                    changeFontSize(savedFontSize);
+                }
+            });
+
+            // Add keyboard shortcuts for font size adjustment
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case '-':
+                        case '_':
+                            e.preventDefault();
+                            changeFontSize('small');
+                            break;
+                        case '=':
+                        case '+':
+                            e.preventDefault();
+                            changeFontSize('large');
+                            break;
+                        case '0':
+                            e.preventDefault();
+                            changeFontSize('normal');
+                            break;
+                    }
+                }
+            });
+        </script>
     </body>
 </html>

@@ -18,6 +18,11 @@
     --shadow-light: rgba(0, 0, 0, 0.1);
     --shadow-medium: rgba(0, 0, 0, 0.2);
     --shadow-heavy: rgba(0, 0, 0, 0.3);
+    
+    /* Font size variables for accessibility */
+    --base-font-size: 1rem;
+    --header-font-size: 1.5rem;
+    --small-font-size: 0.875rem;
 }
 
 /* Reset and Base Styles */
@@ -37,6 +42,160 @@ body {
     color: var(--csu-gray);
     background: linear-gradient(135deg, var(--csu-light-gray) 0%, #e8e8e8 100%);
     min-height: 100vh;
+    font-size: var(--base-font-size);
+    opacity: 0;
+    animation: pageLoad 1s ease-in-out forwards;
+}
+
+/* Page load animation */
+@keyframes pageLoad {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Font size adjuster controls */
+.font-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--csu-red);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px var(--shadow-medium);
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    animation: slideInRight 0.8s ease-out 0.5s both;
+}
+
+.font-controls button {
+    background: var(--csu-yellow);
+    color: var(--csu-black);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.font-controls button:hover {
+    background: var(--white);
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px var(--shadow-medium);
+}
+
+.font-controls .current-size {
+    color: var(--csu-yellow);
+    font-weight: bold;
+    font-size: 12px;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Font size classes */
+.font-small {
+    --base-font-size: 0.875rem;
+    --header-font-size: 1.25rem;
+    --small-font-size: 0.75rem;
+}
+
+.font-normal {
+    --base-font-size: 1rem;
+    --header-font-size: 1.5rem;
+    --small-font-size: 0.875rem;
+}
+
+.font-large {
+    --base-font-size: 1.125rem;
+    --header-font-size: 1.75rem;
+    --small-font-size: 1rem;
+}
+
+.font-extra-large {
+    --base-font-size: 1.25rem;
+    --header-font-size: 2rem;
+    --small-font-size: 1.125rem;
+}
+
+/* Apply font sizes to elements */
+h1 {
+    font-size: calc(clamp(2.5rem, 6vw, 4rem) * var(--header-font-size) / 1.5rem);
+}
+
+h2 {
+    font-size: calc(var(--header-font-size) * 1.5);
+}
+
+h3 {
+    font-size: var(--header-font-size);
+}
+
+p, .names, .title, .description, .academic {
+    font-size: var(--base-font-size);
+}
+
+.small-text {
+    font-size: var(--small-font-size);
+}
+
+/* Slide in animation for font controls */
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Staggered animations for page elements */
+header {
+    animation: slideInDown 1s ease-out 0.2s both;
+}
+
+.navbar {
+    animation: slideInDown 1s ease-out 0.4s both;
+}
+
+main {
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+footer {
+    animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+@keyframes slideInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Header Styles */
@@ -585,7 +744,7 @@ footer {
     /* Contact Page - Mobile */
     #div1, #div2, #div3, #div4, #div5, #div6, #div7 {
         flex-direction: column;
-        text-align: center;
+    text-align: center;
         padding: 1rem;
         gap: 1rem;
     }
@@ -781,9 +940,9 @@ footer {
     .navbar a {
         padding: 1rem 1.2rem;
         min-height: 44px;
-        display: flex;
+    display: flex;
         align-items: center;
-        justify-content: center;
+    justify-content: center;
     }
     
     .email, a.email {
